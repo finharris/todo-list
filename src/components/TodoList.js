@@ -12,6 +12,7 @@ import TodoItem from "./TodoItem";
   5. filter all/active/complete ✔
   6. delete todo ✔
   7. delete all complete ✔
+  8. make long todos work 
 */
 
 export default function TodoList() {
