@@ -1,16 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 export default function AddTodoForm(props) {
-  useEffect(() => {
-    document
-      .getElementById("add-todo-content")
-      .addEventListener("keyup", (event) => {
-        event.preventDefault();
-        if (event.keyCode === 13) {
-          document.getElementById("add-todo-submit").click();
-        }
-      });
-  }, []);
+  const handleEnterPress = (event) => {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      document.getElementById("add-todo-submit").click();
+    }
+  };
 
   const internalHandleTodo = () => {
     const todoInput = document.querySelector("#add-todo-content");
@@ -32,6 +28,7 @@ export default function AddTodoForm(props) {
         name='add-todo-content'
         placeholder='I am going TODO...'
         id='add-todo-content'
+        onKeyUp={() => handleEnterPress()}
       />
       <button id='add-todo-submit' onClick={() => internalHandleTodo()}>
         Add
