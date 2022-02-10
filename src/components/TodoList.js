@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ActionsPanel from "./ActionsPanel";
+import React, { useState, useEffect } from "react";
 import AddTodoForm from "./AddTodoForm";
 import TodoFilters from "./TodoFilters";
 import TodoItem from "./TodoItem";
@@ -11,15 +10,24 @@ import TodoItem from "./TodoItem";
   3. cross off todo ✔
   4. show number of active todos ✔
   5. filter all/active/complete ✔
-  6. delete todo
+  6. delete todo ✔
   7. delete all complete ✔
-    7.1 only show if at least one is complete
-  8. button to toggle all on/off
 */
 
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
   const [todoFilter, setTodoFilter] = useState("All");
+
+  useEffect(() => {
+    const todoListData = JSON.parse(
+      window.localStorage.getItem("todo-list-data")
+    );
+    setTodos(todoListData === null ? [] : todoListData);
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("todo-list-data", JSON.stringify(todos));
+  }, [todos]);
 
   const handleAddTodo = (content) => {
     setTodos([...todos, { content: content, crossedOut: false }]);
@@ -33,18 +41,27 @@ export default function TodoList() {
     );
   };
 
+  const handleDeleteTodo = (index) => {
+    const newTodos = todos.filter((t, i) => i !== index);
+    setTodos(newTodos); // SOME BUG WHERE THIS DOESNT SEEM TO BE BEING CALLED
+  };
+
   const handleTodoFilterChange = () => {
     const todoFilter = document.querySelector("#todo-filter").value;
     setTodoFilter(todoFilter);
   };
 
   const renderListItems = () => {
+    if (todos.length === 0) {
+      return <h1>Nothing to see here.</h1>;
+    }
     if (todoFilter === "All") {
       return todos.map((todo, index) => (
         <TodoItem
           content={todo.content}
           crossedOut={todo.crossedOut}
           handleCrossout={handleCrossout}
+          handleDeleteTodo={handleDeleteTodo}
           index={index}
           key={index}
         ></TodoItem>
@@ -55,6 +72,7 @@ export default function TodoList() {
           <TodoItem
             content={todo.content}
             crossedOut={todo.crossedOut}
+            handleDeleteTodo={handleDeleteTodo}
             handleCrossout={handleCrossout}
             index={index}
             key={index}
@@ -68,6 +86,7 @@ export default function TodoList() {
             content={todo.content}
             crossedOut={todo.crossedOut}
             handleCrossout={handleCrossout}
+            handleDeleteTodo={handleDeleteTodo}
             index={index}
             key={index}
           ></TodoItem>
@@ -85,24 +104,47 @@ export default function TodoList() {
     setTodos(todos.filter((todo) => !todo.crossedOut));
   };
 
+  const handleDeleteAll = () => {
+    if (todos.length !== 0) {
+      const confimation = window.confirm(
+        "Are you sure you want to delete all todos? (this canno't be undone)"
+      );
+      if (confimation) {
+        setTodos([]);
+      } else {
+        return;
+      }
+    }
+  };
+
   return (
     <div className='content'>
-      <ActionsPanel
-        handleDeleteAllCompleted={handleDeleteAllCompleted}
-      ></ActionsPanel>
-
       <div className='todo-list'>
-        <AddTodoForm handleAddTodo={handleAddTodo}></AddTodoForm>
-
-        <TodoFilters
-          handleTodoFilterChange={handleTodoFilterChange}
-        ></TodoFilters>
+        <header>
+          <AddTodoForm handleAddTodo={handleAddTodo}></AddTodoForm>
+          <TodoFilters
+            handleTodoFilterChange={handleTodoFilterChange}
+          ></TodoFilters>
+        </header>
 
         <div className='todo-items'>{renderListItems()}</div>
 
-        <div className='todo-active-tasks'>
-          Active Tasks: {todos.filter((todo) => !todo.crossedOut).length}
-        </div>
+        <footer>
+          <button
+            className='action-button'
+            onClick={() => handleDeleteAllCompleted()}
+          >
+            Delete All Completed
+          </button>
+
+          <button className='action-button' onClick={() => handleDeleteAll()}>
+            Delete All
+          </button>
+
+          <div className='todo-active-tasks'>
+            Active Tasks: {todos.filter((todo) => !todo.crossedOut).length}
+          </div>
+        </footer>
       </div>
     </div>
   );
