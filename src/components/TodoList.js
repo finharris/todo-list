@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AddTodoForm from "./AddTodoForm";
+import NewUserInfo from "./NewUserInfo";
 import TodoFilters from "./TodoFilters";
 import TodoItem from "./TodoItem";
 
@@ -18,16 +19,30 @@ import TodoItem from "./TodoItem";
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
   const [todoFilter, setTodoFilter] = useState("All");
+  const [hasVisited, setHasVisited] = useState();
 
   useEffect(() => {
     const todoListData = JSON.parse(
       window.localStorage.getItem("todo-list-data")
     );
-    setTodos(todoListData === null ? [] : todoListData);
+
+    setTodos(todoListData === null ? [] : todoListData.todos);
+
+    if (todoListData.hasVisited) {
+      setHasVisited(true);
+    } else {
+      window.localStorage.setItem("todo-list-data", {
+        hasVisited: true,
+        todos: todos,
+      });
+    }
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("todo-list-data", JSON.stringify(todos));
+    window.localStorage.setItem(
+      "todo-list-data",
+      JSON.stringify({ hasVisited: true, todos: todos })
+    );
   }, [todos]);
 
   const handleAddTodo = (content) => {
@@ -118,8 +133,23 @@ export default function TodoList() {
     }
   };
 
+  const handleHasVisited = (b) => {
+    setHasVisited(b);
+  };
+
   return (
     <div className='content'>
+      {!hasVisited ? (
+        <NewUserInfo handleHasVisited={handleHasVisited}></NewUserInfo>
+      ) : null}
+
+      <button
+        className='show-info-button'
+        onClick={() => handleHasVisited(false)}
+      >
+        ⓘ
+      </button>
+
       <div className='todo-list'>
         <header>
           <AddTodoForm handleAddTodo={handleAddTodo}></AddTodoForm>

@@ -28,6 +28,22 @@ html {
   width: 100%;
 }
 
+.show-info-button {
+  font-size: 1.25em;
+  padding: 0.25em;
+  border-radius: 0.25em;
+  border: 2px solid hsl(0, 0%, 70%);
+  background: rgb(194, 194, 194);
+  transition: background 200ms ease-out;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+}
+
+.show-info-button:hover {
+  background: lightgray;
+}
+
 .todo-list {
   height: 100vh;
   width: 60vw;
@@ -155,4 +171,50 @@ footer {
 
 .action-button:hover {
   background-color: lightgray;
+}
+
+.new-user-info {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: lightgray;
+  width: 500px;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 1em 3em;
+  gap: 1em;
+  border-radius: 0.25em;
+  z-index: 1000;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+}
+
+.new-user-info > ol {
+  text-align: left;
+  font-size: 1.25em;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.new-user-info-understood {
+  font-size: 1.5em;
+  padding: 0.4em;
+  border-radius: 0.25em;
+  border: 2px solid hsl(0, 0%, 70%);
+  background: rgb(194, 194, 194);
+  transition: background 200ms ease-out;
+}
+
+.new-user-info-understood:hover {
+  background: lightgray;
+}
+
+.page-blocker {
+  z-index: 999;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
