@@ -14,6 +14,13 @@ export default function AddTodoForm(props) {
 
   const internalHandleTodo = () => {
     const todoInput = document.querySelector("#add-todo-content");
+    if (todoInput.value.length > 45) {
+      alert("Todo must not exceed 45 characters.");
+      return;
+    }
+    if (todoInput.value.length === 0) {
+      return;
+    }
     props.handleAddTodo(todoInput.value);
     todoInput.value = "";
   };
