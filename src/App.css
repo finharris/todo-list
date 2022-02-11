@@ -222,6 +222,10 @@ footer {
   margin-bottom: auto;
 }
 
+.tabbed-in {
+  margin-left: 40px;
+}
+
 .new-user-info-understood {
   font-size: 1.5em;
   padding: 0.4em;

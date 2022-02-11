@@ -7,7 +7,7 @@ export default function TodoItem(props) {
     const interval = setInterval(() => {
       todoItemCopy.classList.toggle("hidden");
       clearInterval(interval);
-    }, 200);
+    }, 400);
 
     navigator.clipboard.writeText(props.content).then(
       function () {

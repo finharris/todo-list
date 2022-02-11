@@ -10,10 +10,17 @@ export default function NewUserInfo(props) {
         <h4>How to create and remove TODOS:</h4>
         <ol>
           <li>Type a todo into the text box at the top of the page.</li>
-          <li>Press ENTER or CLICK the add button.</li>
           <li>
-            Click a todo to cross it out or press the x when hovering over a
+            Press ENTER or CLICK the add button to add the todo to the list.
+          </li>
+          <li>
+            Click a todo to cross it out or press the trash when hovering over a
             todo to delete it.
+            <ol type='a'>
+              <li class='tabbed-in'>
+                You can also copy it using the clipboard icon.
+              </li>
+            </ol>
           </li>
           <li>
             Click delete all or delete all completed buttons at the bottom of

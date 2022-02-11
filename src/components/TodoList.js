@@ -43,6 +43,8 @@ export default function TodoList() {
       "todo-list-data",
       JSON.stringify({ hasVisited: true, todos: todos })
     );
+
+    document.title = `Todos - ${todos.length}`;
   }, [todos]);
 
   const handleAddTodo = (content) => {
@@ -117,7 +119,19 @@ export default function TodoList() {
   };
 
   const handleDeleteAllCompleted = () => {
-    setTodos(todos.filter((todo) => !todo.crossedOut));
+    if (todos.filter((t) => t.crossedOut).length === 0) {
+      return;
+    }
+    if (todos.length !== 0) {
+      const confimation = window.confirm(
+        "Are you sure you want to delete all COMPLETE todos? (this canno't be undone)"
+      );
+      if (confimation) {
+        setTodos(todos.filter((todo) => !todo.crossedOut));
+      } else {
+        return;
+      }
+    }
   };
 
   const handleDeleteAll = () => {
