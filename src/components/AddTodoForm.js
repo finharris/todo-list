@@ -28,7 +28,8 @@ export default function AddTodoForm(props) {
         name='add-todo-content'
         placeholder='I am going TODO...'
         id='add-todo-content'
-        onKeyUp={() => handleEnterPress()}
+        onKeyUp={(e) => handleEnterPress(e)}
+        autoComplete='off'
       />
       <button id='add-todo-submit' onClick={() => internalHandleTodo()}>
         Add

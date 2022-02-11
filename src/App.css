@@ -69,8 +69,6 @@ header {
   width: 60vw;
   margin-top: 1em;
   gap: 0.5em;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .todo-item {
@@ -87,15 +85,58 @@ header {
   height: 2.5em;
   overflow: none;
   white-space: nowrap;
+  user-select: none;
+  cursor: default;
 }
 
 .todo-item:hover {
   background: rgb(243, 243, 243);
 }
 
-.todo-item-delete {
+.todo-item-actions {
+  width: max-content;
   margin-left: auto;
+}
+
+.todo-item-copy {
+  position: relative;
+  z-index: 10000;
+}
+
+.todo-item-copy::after {
+  content: "Copied!";
+  position: absolute;
+  left: 50%;
+  top: -2em;
+  transform: translateX(-50%);
+  background: lightgray;
+  padding: 0.3em;
+  font-style: italic;
+  border-radius: 0.25em;
+  transition: opacity 100ms ease-out;
+  opacity: 100%;
+}
+
+.hidden::after {
+  opacity: 0%;
+}
+
+.icon {
+  color: gray;
   cursor: pointer;
+  transition: color 100ms ease-out;
+}
+
+.icon:hover {
+  color: black;
+}
+
+.todo-item-hidden {
+  display: none;
+}
+
+.todo-item:hover .todo-item-hidden {
+  display: inline;
 }
 
 .todo-item-content {
@@ -105,24 +146,6 @@ header {
 .todo-item-content[data-crossed-out="true"] {
   text-decoration: line-through;
   color: gray;
-}
-
-.todo-item-content::after {
-  content: "Click to cross out.";
-  opacity: 0%;
-  position: absolute;
-  top: -2em;
-  left: 3em;
-  background: lightgray;
-  padding: 0.5em;
-  border-radius: 0.25em;
-  color: black;
-  transition: opacity 200ms ease-out;
-}
-
-.todo-item-content:hover::after {
-  transition-delay: 2s;
-  opacity: 100%;
 }
 
 .add-todo-form {
