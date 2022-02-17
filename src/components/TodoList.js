@@ -21,6 +21,7 @@ export default function TodoList() {
   const [todoFilter, setTodoFilter] = useState("All");
   const [hasVisited, setHasVisited] = useState();
 
+  // load stored todos into the state
   useEffect(() => {
     const todoListData = JSON.parse(
       window.localStorage.getItem("todo-list-data")
@@ -39,13 +40,14 @@ export default function TodoList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // set localstorage to todos and change title on update
   useEffect(() => {
     window.localStorage.setItem(
       "todo-list-data",
       JSON.stringify({ hasVisited: true, todos: todos })
     );
 
-    document.title = `Todos - ${todos.length}`;
+    document.title = `Todos - ${todos.filter((t) => !t.crossedOut).length}`;
   }, [todos]);
 
   const handleAddTodo = (content) => {
