@@ -17,7 +17,7 @@ export default function NewUserInfo(props) {
             Click a todo to cross it out or press the trash when hovering over a
             todo to delete it.
             <ol type='a'>
-              <li class='tabbed-in'>
+              <li className='tabbed-in'>
                 You can also copy it using the clipboard icon.
               </li>
             </ol>

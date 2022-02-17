@@ -1,6 +1,32 @@
 :root {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
+  --background: white;
+  --light-gray: rgb(194, 194, 194);
+  --light-gray-alternate: rgb(233, 233, 233);
+  --text-active: black;
+  --text-inactive: gray;
+  --border: lightgray;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgb(25, 25, 27);
+    --light-gray: rgb(131, 131, 131);
+    --light-gray-alternate: rgb(71, 71, 71);
+    --text-active: rgb(211, 211, 211);
+    --text-inactive: gray;
+    --border: rgb(109, 109, 109);
+  }
+  button {
+    color: var(--text-active);
+  }
+  input[type="text"]::placeholder {
+    color: var(--text-active);
+  }
+  input[type="text"] {
+    color: var(--text-active);
+  }
 }
 
 * {
@@ -12,6 +38,8 @@
 body,
 html {
   height: 100vh;
+  background: var(--background);
+  color: var(--text-active);
 }
 
 #root {
@@ -32,8 +60,8 @@ html {
   font-size: 1.25em;
   padding: 0.25em;
   border-radius: 0.25em;
-  border: 2px solid hsl(0, 0%, 70%);
-  background: rgb(194, 194, 194);
+  border: 2px solid var(--border);
+  background: var(--light-gray);
   transition: background 200ms ease-out;
   position: absolute;
   top: 0.5em;
@@ -41,7 +69,84 @@ html {
 }
 
 .show-info-button:hover {
-  background: lightgray;
+  background: var(--light-gray-alternate);
+}
+
+.switch-container {
+  display: flex;
+  position: absolute;
+  left: 1em;
+  top: 1em;
+  width: 60px;
+  height: max-content;
+  flex-direction: column;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  height: 34px;
+}
+
+.switch-label {
+  font-size: 0.75em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--light-gray);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--light-gray-alternate);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 
 .todo-list {
@@ -90,7 +195,7 @@ header {
 }
 
 .todo-item:hover {
-  background: rgb(243, 243, 243);
+  background: var(--light-gray-alternate);
 }
 
 .todo-item-actions {
@@ -109,7 +214,7 @@ header {
   left: 50%;
   top: -2em;
   transform: translateX(-50%);
-  background: lightgray;
+  background: var(--light-gray);
   padding: 0.3em;
   font-style: italic;
   border-radius: 0.25em;
@@ -122,13 +227,13 @@ header {
 }
 
 .icon {
-  color: gray;
+  color: var(--text-inactive);
   cursor: pointer;
   transition: color 100ms ease-out;
 }
 
 .icon:hover {
-  color: black;
+  color: var(--text-active);
 }
 
 .todo-item-hidden {
@@ -145,12 +250,12 @@ header {
 
 .todo-item-content[data-crossed-out="true"] {
   text-decoration: line-through;
-  color: gray;
+  color: var(--text-inactive);
 }
 
 .add-todo-form {
   height: 2.5em;
-  border: 2px solid lightgray;
+  border: 2px solid var(--border);
   gap: 0;
   width: 100%;
   border-radius: 0.25em;
@@ -163,7 +268,7 @@ header {
   width: 90%;
   height: 100%;
   border: none;
-  background: rgb(194, 194, 194);
+  background: var(--light-gray);
 }
 
 #add-todo-submit {
@@ -172,6 +277,7 @@ header {
   font-size: 1.25em;
   padding: 0.25em;
   border: none;
+  background-color: var(--light-gray-alternate);
 }
 
 footer {
@@ -185,15 +291,15 @@ footer {
 
 .action-button {
   font-size: 1.25em;
-  background: rgb(194, 194, 194);
-  border: 2px solid lightgray;
+  background: var(--light-gray);
+  border: 2px solid var(--border);
   padding: 0.3em;
   border-radius: 0.25em;
   transition: 100ms ease-out;
 }
 
 .action-button:hover {
-  background-color: lightgray;
+  background-color: var(--light-gray-alternate);
 }
 
 .new-user-info {
@@ -201,7 +307,7 @@ footer {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background: lightgray;
+  background: var(--light-gray);
   width: 500px;
   aspect-ratio: 1/1;
   display: flex;
@@ -230,13 +336,13 @@ footer {
   font-size: 1.5em;
   padding: 0.4em;
   border-radius: 0.25em;
-  border: 2px solid hsl(0, 0%, 70%);
-  background: rgb(194, 194, 194);
+  border: 2px solid var(--border);
+  background: var(--light-gray);
   transition: background 200ms ease-out;
 }
 
 .new-user-info-understood:hover {
-  background: lightgray;
+  background: var(--light-gray-alternate);
 }
 
 .page-blocker {
