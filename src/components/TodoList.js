@@ -86,18 +86,36 @@ export default function TodoList() {
         ></TodoItem>
       ));
     } else if (todoFilter === "Active") {
-      return todos.map((todo, index) =>
+      const newTodos = todos.map((todo, index) =>
         !todo.crossedOut ? (
           <TodoItem
             content={todo.content}
             crossedOut={todo.crossedOut}
-            handleDeleteTodo={handleDeleteTodo}
             handleCrossout={handleCrossout}
+            handleDeleteTodo={handleDeleteTodo}
             index={index}
             key={index}
           ></TodoItem>
         ) : null
       );
+
+      if (newTodos.every((todo) => todo === null)) {
+        return <h1>Nothing to see here.</h1>;
+      } else {
+        return newTodos;
+      }
+      // return todos.map((todo, index) =>
+      //   !todo.crossedOut ? (
+      //     <TodoItem
+      //       content={todo.content}
+      //       crossedOut={todo.crossedOut}
+      //       handleDeleteTodo={handleDeleteTodo}
+      //       handleCrossout={handleCrossout}
+      //       index={index}
+      //       key={index}
+      //     ></TodoItem>
+      //   ) : null
+      // );
     } else if (todoFilter === "Complete") {
       const newTodos = todos.map((todo, index) =>
         todo.crossedOut ? (
@@ -111,6 +129,7 @@ export default function TodoList() {
           ></TodoItem>
         ) : null
       );
+
       if (newTodos.every((todo) => todo === null)) {
         return <h1>Nothing to see here.</h1>;
       } else {
