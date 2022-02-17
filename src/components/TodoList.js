@@ -28,7 +28,7 @@ export default function TodoList() {
 
     setTodos(todoListData === null ? [] : todoListData.todos);
 
-    if (todoListData.hasVisited) {
+    if (todoListData !== null && todoListData.hasVisited) {
       setHasVisited(true);
     } else {
       window.localStorage.setItem("todo-list-data", {
